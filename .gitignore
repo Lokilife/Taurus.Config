@@ -1,1 +1,5 @@
 .env
+squid/cache/
+!squid/cache/.gitkeep
+squid/logs/
+certs/

@@ -18,6 +18,7 @@ services:
     restart: unless-stopped
     volumes:
     - database:/var/lib/postgres/data
+    - ./postgres/init.sh:/docker-entrypoint-initdb.d/01-init.sh
 
   authentik-server:
     command: server
@@ -34,8 +35,8 @@ services:
       AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY:?secret key required}
     image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2026.5.2}
     ports:
-    - ${COMPOSE_PORT_HTTP:-9000}:9000
-    - ${COMPOSE_PORT_HTTPS:-9443}:9443
+    - 127.0.0.1:${COMPOSE_PORT_HTTP:-9000}:9000
+    - 127.0.0.1:${COMPOSE_PORT_HTTPS:-9443}:9443
     restart: unless-stopped
     shm_size: 512mb
     volumes:

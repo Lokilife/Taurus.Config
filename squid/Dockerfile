@@ -8,8 +8,6 @@ RUN mkdir -p /var/cache/squid /var/log/squid && \
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-USER squid
-
 EXPOSE 3128
 
 ENTRYPOINT ["/entrypoint.sh"]
