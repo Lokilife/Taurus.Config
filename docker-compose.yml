@@ -76,6 +76,22 @@ services:
       - ./squid/logs:/var/log/squid
       - ./squid/etc:/etc/squid
 
+  filebrowser:
+    image: gtstef/filebrowser
+    restart: unless-stopped
+    environment:
+      - FILEBROWSER_OIDC_CLIENT_ID=${FB_OIDC_CLIENT_ID:?filebrowser OIDC client ID required}
+      - FILEBROWSER_OIDC_CLIENT_SECRET=${FB_OIDC_CLIENT_SECRET:?filebrowser OIDC client secret required}
+      - TZ=${TZ:-Europe/Moscow}
+    volumes:
+      - filebrowser_data:/srv
+      - ./filebrowser/data:/home/filebrowser/data
+      - ./filebrowser/config:/config
+    ports:
+      - 8000:80
+
 volumes:
   database:
+    driver: local
+  filebrowser_data:
     driver: local

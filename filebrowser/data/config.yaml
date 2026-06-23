@@ -1,0 +1,20 @@
+server:
+  cacheDir: /home/filebrowser/data/tmp # using the data volume so it can persist across restarts
+  sources:
+    - path: /srv
+      config:
+        defaultEnabled: true
+auth:
+  methods:
+    password:
+      enabled: false # set to false if you only want to allow OIDC
+    oidc:
+      enabled: true # whether to enable OIDC authentication
+      issuerUrl: "http://192.168.4.13:9000/application/o/filebrowser/" # URL of the OIDC provider
+      scopes: "email openid profile groups" # scopes to request from the OIDC provider
+      userIdentifier: "preferred_username" # the attribute used as username. Default/typical is "preferred_username", can also be "email" or "username", or "phone"
+      disableVerifyTLS: false # disable TLS verification for the OIDC provider. This is insecure and should only be used for testing.
+      logoutRedirectUrl: "" # if provider logout url is provided, filebrowser will also redirect to logout url. Custom logout query params are respected.
+      createUser: true # create user if it does not exist
+      adminGroup: "authentik Admins" # if set, OIDC will manage whether a user is `admin` or not.
+      groupsClaim: "groups" # the JSON field name to read groups from. Default is "groups"
