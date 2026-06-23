@@ -35,8 +35,8 @@ services:
       AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY:?secret key required}
     image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2026.5.2}
     ports:
-    - 127.0.0.1:${COMPOSE_PORT_HTTP:-9000}:9000
-    - 127.0.0.1:${COMPOSE_PORT_HTTPS:-9443}:9443
+    - ${COMPOSE_PORT_HTTP:-9000}:9000
+    - ${COMPOSE_PORT_HTTPS:-9443}:9443
     restart: unless-stopped
     shm_size: 512mb
     volumes:
@@ -67,8 +67,7 @@ services:
     - ./authentik/custom-templates:/templates
 
   squid-proxy:
-    build: ./squid
-    image: squid-local:alpine
+    image: ghcr.io/lokilife/squid.ldap:sha-4dcf3af
     restart: unless-stopped
     ports:
       - "3128:3128"

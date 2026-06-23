@@ -2,4 +2,5 @@
 squid/cache/
 !squid/cache/.gitkeep
 squid/logs/
+squid/etc/ldap_pass.txt
 certs/
