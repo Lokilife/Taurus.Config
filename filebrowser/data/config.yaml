@@ -18,3 +18,6 @@ auth:
       createUser: true # create user if it does not exist
       adminGroup: "authentik Admins" # if set, OIDC will manage whether a user is `admin` or not.
       groupsClaim: "groups" # the JSON field name to read groups from. Default is "groups"
+integrations:
+  office:
+    url: "http://192.168.4.13:7000"

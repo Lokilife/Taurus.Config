@@ -82,6 +82,7 @@ services:
     environment:
       - FILEBROWSER_OIDC_CLIENT_ID=${FB_OIDC_CLIENT_ID:?filebrowser OIDC client ID required}
       - FILEBROWSER_OIDC_CLIENT_SECRET=${FB_OIDC_CLIENT_SECRET:?filebrowser OIDC client secret required}
+      - FILEBROWSER_ONLYOFFICE_SECRET=${OF_JWT_SECRET:?onlyoffice JWT secret required}
       - TZ=${TZ:-Europe/Moscow}
     volumes:
       - filebrowser_data:/srv
@@ -89,6 +90,22 @@ services:
       - ./filebrowser/config:/config
     ports:
       - 8000:80
+
+  onlyoffice:
+    image: onlyoffice/documentserver:latest
+    ports:
+      - 7000:80
+    environment:
+      - JWT_SECRET=${OF_JWT_SECRET:?onlyoffice JWT secret required}
+    volumes:
+      - ./onlyoffice_data/logs:/var/log/onlyoffice
+      - ./onlyoffice_data/data:/var/www/onlyoffice/Data
+      - ./onlyoffice_data/redis:/var/lib/redis
+      - ./onlyoffice_data/rabbitmq:/var/lib/rabbitmq
+      - ./onlyoffice_data/lib:/var/lib/onlyoffice
+      - ./onlyoffice_data/fonts:/usr/share/fonts/truetype/custom
+      - ./onlyoffice_data/database:/var/lib/postgresql
+    restart: on-failure:5
 
 volumes:
   database:
